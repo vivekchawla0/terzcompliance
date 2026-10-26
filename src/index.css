@@ -1,0 +1,401 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Professional Light Theme - Cool neutral with subtle warmth */
+    --background: 220 14% 97%; /* #F7F8FA - Cool professional gray */
+    --foreground: 220 20% 18%; /* #252A33 - Deep charcoal for text */
+
+    --card: 0 0% 100%; /* #FFFFFF - Pure white card surface */
+    --card-foreground: 220 20% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 18%;
+
+    /* Primary brand - Logo Blue */
+    --primary: 217 91% 60%; /* #3B82F6 - Logo blue */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 91% 52%;
+
+    /* Secondary/muted surfaces - cool light grays */
+    --secondary: 220 14% 94%; /* Slightly darker than background */
+    --secondary-foreground: 220 20% 18%;
+
+    --muted: 220 12% 91%;
+    --muted-foreground: 220 10% 45%; /* #6B7280 - Medium gray */
+
+    /* Accent - Teal */
+    --accent: 162 66% 32%; /* #1C8864 - Warm teal */
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 2 72% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs - subtle for light theme */
+    --border: 220 14% 88%;
+    --input: 220 14% 92%;
+    --ring: 217 91% 60%;
+
+    /* Headings - Darker blue for readability */
+    --heading: 217 91% 45%;
+
+    /* Brand color shades - Logo Blue ramp */
+    --brand-50: 217 89% 97%;   /* #EFF6FF */
+    --brand-100: 217 89% 93%;  /* #DBEAFE */
+    --brand-200: 217 90% 85%;  /* #BFDBFE */
+    --brand-300: 217 91% 72%;  /* #93C5FD */
+    --brand-400: 217 91% 65%;  /* #60A5FA */
+    --brand-500: 217 91% 60%;  /* #3B82F6 - Logo color */
+    --brand-600: 217 91% 52%;  /* #2563EB */
+    --brand-700: 217 93% 42%;  /* #1D4ED8 */
+    --brand-900: 217 94% 30%;  /* #1E3A8A */
+
+    /* Accent teal shades */
+    --accent-100: 162 55% 92%;
+    --accent-200: 162 58% 78%;
+    --accent-300: 162 62% 58%;
+    --accent-500: 162 66% 32%;
+    --accent-600: 162 68% 25%;
+
+    /* Status colors for light theme */
+    --success: 162 66% 32%;
+    --success-bg: 162 55% 94%;
+    --success-text: 162 68% 20%;
+
+    --warning: 37 94% 48%;
+    --warning-bg: 38 88% 94%;
+    --warning-text: 32 74% 20%;
+
+    --error: 356 78% 50%;
+    --error-bg: 355 74% 94%;
+    --error-text: 350 72% 18%;
+
+    --radius: 0.5rem;
+
+    /* Professional light gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%), hsl(162, 66%, 32%));
+    --gradient-hero: linear-gradient(135deg, hsl(220, 14%, 97%) 0%, hsl(220, 20%, 94%) 50%, hsl(217, 85%, 95%) 100%);
+    --gradient-section: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(220, 14%, 96%) 100%);
+    --gradient-section-alt: linear-gradient(180deg, hsl(220, 14%, 96%) 0%, hsl(0, 0%, 100%) 100%);
+    --gradient-subtle-blue: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(217, 85%, 97%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(217, 91%, 52%) 0%, hsl(162, 66%, 32%) 100%);
+
+    /* Light theme shadows - subtle blue-tinted */
+    --shadow-sm: 0 1px 3px hsla(217, 28%, 20%, 0.06);
+    --shadow-md: 0 4px 12px hsla(217, 32%, 22%, 0.08);
+    --shadow-lg: 0 12px 32px hsla(217, 38%, 20%, 0.12);
+    --shadow-brand: 0 20px 50px -24px hsla(217, 91%, 60%, 0.18);
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 225 20% 12%;
+    --foreground: 30 10% 92%;
+
+    --card: 225 18% 16%;
+    --card-foreground: 30 10% 92%;
+
+    --popover: 225 18% 16%;
+    --popover-foreground: 30 10% 92%;
+
+    --primary: 209 53% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 209 53% 28%;
+
+    --secondary: 225 15% 20%;
+    --secondary-foreground: 30 10% 92%;
+
+    --muted: 225 15% 18%;
+    --muted-foreground: 25 8% 65%;
+
+    --accent: 162 66% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 356 78% 54%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 225 15% 28%;
+    --input: 225 15% 25%;
+    --ring: 162 66% 40%;
+
+    --heading: 30 10% 94%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground bg-background;
+  }
+}
+
+@layer components {
+  .shadow-surface-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-surface {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-surface-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-surface-brand {
+    box-shadow: var(--shadow-brand);
+  }
+
+  /* Light theme glass panel */
+  .glass-panel {
+    @apply border border-border/60 bg-card/90 backdrop-blur-sm shadow-surface;
+  }
+
+  /* Gradient text for accents */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  @keyframes floatSlow {
+    0%,
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-16px) scale(1.02);
+    }
+  }
+
+  @keyframes floatDelayed {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(-12px, -18px, 0) rotate(-2deg);
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes draw-line {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes draw-check {
+    0% {
+      stroke-dashoffset: 24;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .animate-float-slow {
+    animation: floatSlow 12s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: floatDelayed 14s ease-in-out infinite;
+  }
+
+  .animate-pulse-ring {
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  .animate-draw-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 1.5s ease-out forwards;
+  }
+
+  .animate-draw-check {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: draw-check 0.4s ease-out forwards;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.1) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounce-subtle 1s ease-in-out infinite;
+  }
+
+  /* Globe animations */
+  @keyframes globe-spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+
+  @keyframes globe-glow {
+    0%, 100% { 
+      box-shadow: 
+        0 0 60px hsla(217, 91%, 60%, 0.4),
+        0 0 120px hsla(217, 91%, 60%, 0.2);
+    }
+    50% { 
+      box-shadow: 
+        0 0 80px hsla(217, 91%, 60%, 0.5),
+        0 0 150px hsla(217, 91%, 60%, 0.3);
+    }
+  }
+
+  @keyframes orbit-dash {
+    from { stroke-dashoffset: 100; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes atmosphere-pulse {
+    0%, 100% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes city-twinkle {
+    0%, 100% {
+      opacity: 0.7;
+    }
+    25% {
+      opacity: 0.9;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    75% {
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes cloud-drift {
+    from { transform: translateX(0) rotate(0deg); }
+    to { transform: translateX(5px) rotate(2deg); }
+  }
+
+  .animate-globe-spin {
+    animation: globe-spin 60s linear infinite;
+  }
+
+  .animate-globe-glow {
+    animation: globe-glow 3s ease-in-out infinite;
+  }
+
+  .animate-orbit-dash {
+    stroke-dasharray: 8 4;
+    animation: orbit-dash 20s linear infinite;
+  }
+
+  .animate-atmosphere-pulse {
+    animation: atmosphere-pulse 4s ease-in-out infinite;
+  }
+
+  .animate-city-twinkle {
+    animation: city-twinkle 3s ease-in-out infinite;
+  }
+
+  @keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marquee-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .animate-marquee-left {
+    animation: marquee-left 30s linear infinite;
+  }
+
+  .animate-marquee-right {
+    animation: marquee-right 30s linear infinite;
+  }
+}
+
+/* Search highlight */
+mark.search-highlight {
+  background-color: hsl(48, 96%, 70%);
+  color: inherit;
+  padding: 1px 2px;
+  border-radius: 2px;
+  animation: highlight-pulse 1.5s ease-in-out 1;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { background-color: hsl(48, 96%, 70%); }
+  50% { background-color: hsl(48, 96%, 55%); }
+}
