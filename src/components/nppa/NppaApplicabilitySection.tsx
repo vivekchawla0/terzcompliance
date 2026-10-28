@@ -32,7 +32,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Domestic Medical Device Manufacturers",
     description:
       "Manufacturers holding CDSCO or SLA licences for medical devices should assess whether their products attract NPPA pricing compliance obligations under the DPCO.",
-    desktopClass: "top-[4%] left-[2%] xl:left-[4%]",
+    desktopClass: "top-[2%] left-[1.5%] xl:left-[3.5%]",
   },
   {
     number: "02",
@@ -40,7 +40,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Medical Device Importers",
     description:
       "Entities importing medical devices under CDSCO import licences (Form MD-15) need to evaluate applicable NPPA requirements for their imported product portfolio.",
-    desktopClass: "top-[4%] right-[2%] xl:right-[4%]",
+    desktopClass: "top-[2%] right-[1.5%] xl:right-[3.5%]",
   },
   {
     number: "03",
@@ -48,7 +48,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Subsequent Importers",
     description:
       "Subsequent importers operating under the import licence route must independently assess and comply with applicable NPPA pricing obligations.",
-    desktopClass: "top-[36%] left-[0%] xl:left-[1%]",
+    desktopClass: "top-[34%] left-[0%] xl:left-[1%]",
   },
   {
     number: "04",
@@ -56,7 +56,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Marketers and Brand Owners",
     description:
       "Entities marketing medical devices under their own brand, even if manufactured by others, should assess NPPA applicability based on their role in the supply chain.",
-    desktopClass: "top-[36%] right-[0%] xl:right-[1%]",
+    desktopClass: "top-[34%] right-[0%] xl:right-[1%]",
   },
   {
     number: "05",
@@ -64,7 +64,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Businesses Handling Multiple Categories",
     description:
       "Companies dealing in both scheduled and non-scheduled medical devices must separately evaluate NPPA applicability for each category.",
-    desktopClass: "top-[68%] left-[4%] xl:left-[6%]",
+    desktopClass: "top-[67%] left-[3.5%] xl:left-[5%]",
   },
   {
     number: "06",
@@ -72,7 +72,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
     title: "Other Stakeholders",
     description:
       "Distributors, wholesalers, and other supply chain participants should assess their obligations based on the specific provisions of the DPCO and their role in the market.",
-    desktopClass: "top-[68%] right-[4%] xl:right-[6%]",
+    desktopClass: "top-[67%] right-[3.5%] xl:right-[5%]",
   },
 ];
 
@@ -149,7 +149,7 @@ const OrbitalCoinBadge = ({
   </motion.div>
 );
 
-/* ─── 3D Blue Compliance Shield (Exact Match to Image 1) ─── */
+/* ─── 3D Blue Compliance Shield (Matching Reference) ─── */
 const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
   const shouldReduceMotion = useReducedMotion();
 
@@ -202,9 +202,9 @@ const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
               y2="74"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-              <stop offset="50%" stopColor="#64DFDF" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#1677E8" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+              <stop offset="50%" stopColor="#64DFDF" stopOpacity="0.75" />
+              <stop offset="100%" stopColor="#1677E8" stopOpacity="0.45" />
             </linearGradient>
             <filter id="shieldBevel" x="-10%" y="-10%" width="120%" height="120%">
               <feDropShadow
@@ -229,14 +229,14 @@ const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
             d="M32 7L54 16.5V36C54 50.5 44.5 61.5 32 66.5C19.5 61.5 10 50.5 10 36V16.5L32 7Z"
             fill="none"
             stroke="white"
-            strokeOpacity="0.32"
+            strokeOpacity="0.35"
             strokeWidth="1.2"
           />
           {/* Top-Right Specular Light Streak */}
           <path
             d="M32 8L52 17V32C52 32 40 28 32 35C24 42 16 38 12 36V17L32 8Z"
             fill="white"
-            fillOpacity="0.2"
+            fillOpacity="0.22"
           />
           {/* White Checkmark */}
           <path
@@ -253,7 +253,7 @@ const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
   );
 };
 
-/* ─── 3D Magnifying Glass (Exact Match to Image 1) ─── */
+/* ─── 3D Magnifying Glass (Matching Reference) ─── */
 const MagnifyingGlass3D = () => (
   <div className="relative w-20 h-20 sm:w-24 sm:h-24 pointer-events-none select-none">
     <svg
@@ -371,10 +371,10 @@ const FloatingApplicabilityCard = ({
       }}
     >
       <motion.div
-        className="group relative rounded-3xl bg-white/95 backdrop-blur-xl border border-blue-100/90 p-5 xl:p-6 transition-all duration-300"
+        className="group relative rounded-3xl bg-white/92 backdrop-blur-xl border border-white/95 p-5 xl:p-6 transition-all duration-300"
         style={{
           boxShadow:
-            "0 16px 40px rgba(22,119,232,0.07), 0 3px 12px rgba(0,0,0,0.03), inset 0 1px 2px rgba(255,255,255,0.95)",
+            "0 18px 45px rgba(22,119,232,0.11), 0 3px 12px rgba(0,0,0,0.03), inset 0 1px 2px rgba(255,255,255,0.95)",
         }}
         whileHover={
           shouldReduceMotion
@@ -383,7 +383,7 @@ const FloatingApplicabilityCard = ({
                 y: -5,
                 scale: 1.015,
                 boxShadow:
-                  "0 22px 55px rgba(22,119,232,0.18), 0 6px 18px rgba(21,188,223,0.15), inset 0 1px 2px rgba(255,255,255,1)",
+                  "0 24px 60px rgba(22,119,232,0.20), 0 6px 18px rgba(21,188,223,0.18), inset 0 1px 2px rgba(255,255,255,1)",
               }
         }
         transition={{ type: "spring", stiffness: 350, damping: 25 }}
@@ -408,7 +408,7 @@ const FloatingApplicabilityCard = ({
         </h3>
 
         {/* Description */}
-        <p className="text-[11px] xl:text-xs text-[#64748B] leading-relaxed mt-1.5">
+        <p className="text-[11px] xl:text-xs text-[#64748B] leading-relaxed mt-1.5 font-medium">
           {card.description}
         </p>
       </motion.div>
@@ -432,11 +432,11 @@ const CentralAmphitheaterRig = () => {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-0">
         {/* Ring 1: Wide Outer Cyan Ellipse (Clockwise) */}
         <motion.div
-          className="absolute w-[440px] sm:w-[560px] md:w-[680px] xl:w-[780px] h-[220px] sm:h-[260px] md:h-[300px] xl:h-[320px] rounded-[100%] border border-cyan-400/45"
+          className="absolute w-[440px] sm:w-[560px] md:w-[680px] xl:w-[780px] h-[220px] sm:h-[260px] md:h-[300px] xl:h-[320px] rounded-[100%] border border-cyan-400/50"
           style={{
             transform: "rotateX(72deg) rotateZ(-10deg)",
             boxShadow:
-              "0 0 35px rgba(21,188,223,0.22), inset 0 0 25px rgba(22,119,232,0.15)",
+              "0 0 35px rgba(21,188,223,0.25), inset 0 0 25px rgba(22,119,232,0.18)",
           }}
           animate={
             shouldReduceMotion
@@ -454,7 +454,7 @@ const CentralAmphitheaterRig = () => {
 
         {/* Ring 2: Inner Dashed Blue Ellipse (Counter-Clockwise) */}
         <motion.div
-          className="absolute w-[360px] sm:w-[460px] md:w-[540px] xl:w-[620px] h-[170px] sm:h-[210px] md:h-[240px] xl:h-[260px] rounded-[100%] border border-dashed border-[#1677E8]/40"
+          className="absolute w-[360px] sm:w-[460px] md:w-[540px] xl:w-[620px] h-[170px] sm:h-[210px] md:h-[240px] xl:h-[260px] rounded-[100%] border border-dashed border-[#1677E8]/45"
           style={{
             transform: "rotateX(70deg) rotateZ(18deg)",
           }}
@@ -474,10 +474,10 @@ const CentralAmphitheaterRig = () => {
 
         {/* Ring 3: Wide Base Ellipse */}
         <div
-          className="absolute w-[500px] sm:w-[620px] md:w-[740px] xl:w-[840px] h-[200px] sm:h-[240px] rounded-[100%] border border-blue-200/50"
+          className="absolute w-[500px] sm:w-[620px] md:w-[740px] xl:w-[840px] h-[200px] sm:h-[240px] rounded-[100%] border border-blue-300/50"
           style={{
             transform: "rotateX(76deg) translateY(75px)",
-            boxShadow: "0 0 45px rgba(22,119,232,0.18)",
+            boxShadow: "0 0 45px rgba(22,119,232,0.20)",
           }}
         />
       </div>
@@ -542,7 +542,7 @@ const CentralAmphitheaterRig = () => {
 
       {/* ── Central Floating 3D NPPA Document ── */}
       <motion.div
-        className="relative z-20 mb-[-20px]"
+        className="relative z-20 mb-[-10px]"
         initial={{ opacity: 0, y: 35, scale: 0.9 }}
         animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 35, scale: 0.9 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -567,10 +567,10 @@ const CentralAmphitheaterRig = () => {
         >
           {/* Document Body */}
           <div
-            className="w-[230px] sm:w-[260px] md:w-[280px] rounded-3xl bg-gradient-to-b from-white via-white/95 to-blue-50/80 p-5 sm:p-6 border border-white/90 shadow-[0_25px_50px_rgba(22,119,232,0.20),_0_0_0_1px_rgba(21,188,223,0.3)] backdrop-blur-xl relative"
+            className="w-[230px] sm:w-[260px] md:w-[280px] rounded-3xl bg-gradient-to-b from-white via-white/95 to-blue-50/80 p-5 sm:p-6 border border-white/90 shadow-[0_25px_50px_rgba(22,119,232,0.22),_0_0_0_1px_rgba(21,188,223,0.35)] backdrop-blur-xl relative"
             style={{
               boxShadow:
-                "0 22px 50px rgba(22,119,232,0.20), 0 2px 8px rgba(0,0,0,0.04), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 6px rgba(22,119,232,0.06)",
+                "0 22px 50px rgba(22,119,232,0.22), 0 2px 8px rgba(0,0,0,0.04), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 6px rgba(22,119,232,0.06)",
             }}
           >
             {/* Header */}
@@ -643,37 +643,16 @@ const CentralAmphitheaterRig = () => {
         </motion.div>
       </motion.div>
 
-      {/* ── Translucent Circular Pedestal Base ── */}
-      <div className="absolute bottom-6 w-full flex flex-col items-center justify-center pointer-events-none -z-0">
-        {/* Upper Platform Disc */}
+      {/* ── Floor Pedestal Light Accent (Harmonizing with Background Floor Platform) ── */}
+      <div className="absolute bottom-4 w-full flex flex-col items-center justify-center pointer-events-none -z-0">
+        {/* Subtle glowing halo matching the circular pedestal in the background */}
         <div
-          className="w-[220px] sm:w-[270px] md:w-[310px] h-[65px] sm:h-[75px] rounded-[100%] border border-cyan-300/70 shadow-[0_12px_32px_rgba(21,188,223,0.3)] relative"
+          className="w-[280px] sm:w-[340px] md:w-[400px] h-[75px] sm:h-[85px] rounded-[100%] border border-cyan-400/40"
           style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(255,255,255,0.96) 0%, rgba(227,243,255,0.85) 45%, rgba(188,224,255,0.45) 100%)",
-          }}
-        >
-          {/* Luminous Inner Radial Glow */}
-          <div
-            className="absolute inset-2 rounded-[100%]"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(21,188,223,0.35) 0%, transparent 70%)",
-            }}
-          />
-        </div>
-
-        {/* Lower Stepped Platform Disc */}
-        <div
-          className="w-[280px] sm:w-[340px] md:w-[390px] h-[80px] sm:h-[95px] rounded-[100%] border border-blue-200/60 -mt-[52px] sm:-mt-[62px] shadow-[0_22px_55px_rgba(22,119,232,0.22)]"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(235,245,255,0.75) 0%, rgba(206,230,255,0.5) 50%, rgba(180,215,255,0.2) 100%)",
+            boxShadow: "0 0 40px rgba(21,188,223,0.35), inset 0 0 20px rgba(22,119,232,0.20)",
           }}
         />
-
-        {/* Ambient Ground Light Floor Bloom */}
-        <div className="w-[360px] sm:w-[440px] md:w-[500px] h-[80px] rounded-[100%] bg-[#15BCDF]/25 blur-3xl -mt-[45px] pointer-events-none" />
+        <div className="w-[360px] sm:w-[440px] md:w-[500px] h-[70px] rounded-[100%] bg-[#15BCDF]/20 blur-2xl -mt-[40px] pointer-events-none" />
       </div>
     </div>
   );
@@ -681,7 +660,7 @@ const CentralAmphitheaterRig = () => {
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT: NPPA APPLICABILITY SECTION
-   Pixel-Accurate Recreation of Reference Image 1
+   Extra Large, Prominent Background Integration matching User Image
    ═══════════════════════════════════════════════════════════════ */
 export const NppaApplicabilitySection: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -691,25 +670,26 @@ export const NppaApplicabilitySection: React.FC = () => {
   return (
     <section
       id="nppa-applicability-section"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7FAFE] to-[#FFFFFF] py-14 sm:py-18 lg:py-20"
+      className="relative w-full overflow-hidden bg-white pt-10 sm:pt-14 pb-14 sm:pb-20 min-h-[850px] lg:min-h-[940px] flex flex-col justify-between"
     >
-      {/* ── SUPPLIED OFFICIAL BACKGROUND IMAGE (Direct Match to Change One) ── */}
+      {/* ── EXTRA LARGE, PROMINENT BACKGROUND IMAGE ── */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
         <img
           src={nppaBgImg}
           alt="NPPA Applicability Background"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-bottom xl:object-center transform scale-100 lg:scale-[1.01] transition-transform duration-700"
         />
-        {/* Subtle translucent overlay to ensure text readability and blend with adjacent sections */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-white/80 pointer-events-none" />
+        {/* Only a subtle soft blend at the extreme top/bottom edges (40px) for seamless page continuity */}
+        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white via-white/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none" />
       </div>
 
       {/* ── SECTION CONTENT CONTAINER ── */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 w-full">
         {/* ── HEADER ── */}
         <motion.div
           ref={headerRef}
-          className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 lg:mb-14"
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -724,7 +704,7 @@ export const NppaApplicabilitySection: React.FC = () => {
           </div>
 
           {/* Main Heading */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#152443] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-extrabold text-[#152443] tracking-tight leading-tight drop-shadow-sm">
             Who Should Assess{" "}
             <span className="text-[#1677E8] drop-shadow-sm">
               NPPA Applicability?
@@ -732,7 +712,7 @@ export const NppaApplicabilitySection: React.FC = () => {
           </h2>
 
           {/* Subtitle */}
-          <p className="mt-3 text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base text-[#475569] max-w-2xl mx-auto leading-relaxed font-medium">
             Applicability and filing responsibilities depend on the entity's
             actual role, product classification, and relevant DPCO provisions.
           </p>
@@ -740,15 +720,15 @@ export const NppaApplicabilitySection: React.FC = () => {
 
         {/* ═══════════════════════════════════════════════════════════════
             DESKTOP MASTER COMPOSITION (lg and xl screens)
-            Exact pixel-accurate reproduction of Reference Image 1
+            Six Floating Cards Arranged Orbitally Over the Prominent Background
            ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden lg:block relative w-full h-[720px] xl:h-[760px]">
-          {/* ── CENTER: 3D PEDESTAL, ORBITAL RINGS, NPPA DOCUMENT & SHIELD ── */}
+        <div className="hidden lg:block relative w-full h-[760px] xl:h-[820px] 2xl:h-[860px]">
+          {/* ── CENTER: 3D PEDESTAL LIGHT, ORBITAL RINGS, NPPA DOCUMENT & SHIELD ── */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <CentralAmphitheaterRig />
           </div>
 
-          {/* ── THE SIX FLOATING CARDS (ORBITAL ARRANGEMENT AROUND CENTER) ── */}
+          {/* ── THE SIX FLOATING CARDS (ORBITAL ARRANGEMENT FRAMING THE CENTER) ── */}
           {applicabilityCards.map((card, idx) => (
             <div
               key={card.number}
