@@ -168,68 +168,7 @@ const ServiceCard = ({
   );
 };
 
-/* ─── Process Step ─── */
-const ProcessStep = ({
-  step,
-  title,
-  description,
-  index,
-}: {
-  step: string;
-  title: string;
-  description: string;
-  index: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const isLeft = index % 2 === 0;
 
-  return (
-    <RevealSection delay={index * 0.08}>
-      <div
-        ref={ref}
-        className={cn(
-          "relative flex items-start gap-4",
-          "lg:gap-0",
-          isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-        )}
-      >
-        {/* Content */}
-        <div
-          className={cn(
-            "ml-14 lg:ml-0 lg:w-[calc(50%-2rem)]",
-            isLeft ? "lg:pr-8 lg:text-right" : "lg:pl-8 lg:text-left"
-          )}
-        >
-          <motion.div
-            className="rounded-xl border border-border bg-card p-5 shadow-sm"
-            whileHover={{
-              scale: 1.02,
-              boxShadow: "0 8px 30px -12px hsl(var(--primary) / 0.2)",
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-2">
-              {step}
-            </span>
-            <h4 className="text-lg font-bold text-foreground mb-2">{title}</h4>
-            <p className="text-sm text-muted-foreground">{description}</p>
-          </motion.div>
-        </div>
-
-        {/* Dot */}
-        <motion.div
-          className="absolute left-4 lg:left-1/2 -translate-x-1/2 flex h-5 w-5 items-center justify-center rounded-full border-2 border-primary bg-background z-10"
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : { scale: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.08 }}
-        >
-          <span className="h-2 w-2 rounded-full bg-primary" />
-        </motion.div>
-      </div>
-    </RevealSection>
-  );
-};
 
 /* ═══════════════════════════════════════════════════════════════
    FAQ DATA
@@ -738,159 +677,105 @@ const NppaRegistration = () => {
             </div>
           </section>
 
-          {/* ── SECTION 7: DOCUMENTS REQUIRED ── */}
+          {/* ── SECTION 7: STEP-BY-STEP PROCESS (SIMPLIFIED HORIZONTAL TIMELINE) ── */}
           <section>
             <RevealSection>
-              <div className="flex items-center gap-3 mb-6">
-                <motion.div
-                  className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10"
-                  whileHover={{ rotate: 10 }}
-                >
-                  <FileText className="h-6 w-6 text-primary" />
-                </motion.div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                    Preparation Checklist
-                  </p>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
-                    Documents and Information Required for NPPA Registration
-                  </h2>
-                </div>
-              </div>
-            </RevealSection>
-
-            <RevealSection delay={0.1}>
-              <div className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-                <p className="text-sm text-muted-foreground mb-6">
-                  The following is a general preparation checklist. Actual
-                  document requirements must be verified against the current
-                  IPDMS 2.0 instructions and the applicant's specific
-                  circumstances.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {[
-                    "Company incorporation or constitution documents, where applicable",
-                    "CIN / LLPIN, where applicable",
-                    "PAN details",
-                    "GSTIN details",
-                    "Registered office and corporate office information",
-                    "Primary contact details",
-                    "Alternative contact details",
-                    "Authorisation letter or board resolution, where required",
-                    "Applicable CDSCO manufacturing/import licence information",
-                    "Medical device product list",
-                    "Brand and model/catalogue information",
-                    "Current MRP and applicable GST information",
-                    "Relevant pricing history",
-                    "NPPA notices or communications, where applicable",
-                  ].map((doc, i) => (
-                    <motion.div
-                      key={i}
-                      className="flex items-start gap-3 rounded-xl border border-border/50 bg-muted/20 px-4 py-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.04 }}
-                    >
-                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">
-                        {doc}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </RevealSection>
-          </section>
-
-          {/* ── SECTION 8: STEP-BY-STEP PROCESS ── */}
-          <section>
-            <RevealSection>
-              <div className="text-center mb-10">
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-2">
+              <div className="text-center mb-8 lg:mb-10">
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
                   Registration Roadmap
-                </p>
-                <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+                </span>
+                <h2 className="mt-3 text-2xl lg:text-3xl font-bold text-foreground">
                   How the NPPA Registration Process Works
                 </h2>
+                <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground leading-relaxed">
+                  A streamlined 4-step compliance pathway from portfolio review to IPDMS 2.0 filing and ongoing DPCO price monitoring.
+                </p>
               </div>
             </RevealSection>
 
-            <div className="relative">
-              {/* Vertical line */}
-              <div className="absolute left-6 lg:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/60 via-primary/30 to-transparent" />
+            {/* Horizontal Timeline Container */}
+            <RevealSection delay={0.1}>
+              <div className="rounded-2xl border border-border/80 bg-card/60 backdrop-blur-sm p-4 sm:p-6 lg:p-7 shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+                  {[
+                    {
+                      step: "01",
+                      title: "Business & Product Review",
+                      description:
+                        "Audit corporate entity structure, CDSCO/SLA manufacturing or import licences, and medical device catalogues to define NPPA applicability.",
+                      icon: Search,
+                    },
+                    {
+                      step: "02",
+                      title: "Regulatory Applicability",
+                      description:
+                        "Assess scheduled vs. non-scheduled classifications, verify applicable ceiling price limits, and evaluate DPCO 2013 compliance provisions.",
+                      icon: Scale,
+                    },
+                    {
+                      step: "03",
+                      title: "Documentation Support",
+                      description:
+                        "Complete company registration on IPDMS 2.0, submit device & model specifications, and prepare Form II or Form V price disclosure filings.",
+                      icon: FileText,
+                    },
+                    {
+                      step: "04",
+                      title: "Compliance Follow-Up",
+                      description:
+                        "Maintain MRP monitoring, review pricing obligations, respond to NPPA communications, and ensure ongoing regulatory audit readiness.",
+                      icon: ShieldCheck,
+                    },
+                  ].map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.step} className="relative flex flex-col h-full">
+                        <motion.div
+                          className="h-full rounded-xl border border-border/60 bg-background/80 p-4 sm:p-5 flex flex-col justify-between transition-all hover:border-primary/40 hover:shadow-md"
+                          whileHover={{ y: -4 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div>
+                            {/* Step Header */}
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-sm">
+                                <Icon className="h-5 w-5 stroke-[2.2]" />
+                              </div>
+                              <span className="text-xs font-bold text-primary tracking-wider py-0.5 px-2.5 rounded-full bg-primary/10 border border-primary/20">
+                                Step {item.step}
+                              </span>
+                            </div>
 
-              <div className="space-y-8">
-                {[
-                  {
-                    step: "Step 01",
-                    title: "Initial Consultation",
-                    description:
-                      "Understand the business, product portfolio, entity structure, and regulatory requirements to define the scope of NPPA compliance.",
-                  },
-                  {
-                    step: "Step 02",
-                    title: "Applicability Assessment",
-                    description:
-                      "Review the company's role (manufacturer, importer, marketer), product classifications, and the applicable DPCO requirements.",
-                  },
-                  {
-                    step: "Step 03",
-                    title: "Documentation",
-                    description:
-                      "Collect and review company incorporation details, regulatory licence information, product lists, and pricing documentation.",
-                  },
-                  {
-                    step: "Step 04",
-                    title: "IPDMS 2.0 Registration",
-                    description:
-                      "Assist with the applicable company registration process on the IPDMS 2.0 portal, ensuring accurate data entry.",
-                  },
-                  {
-                    step: "Step 05",
-                    title: "Product & Model Information",
-                    description:
-                      "Organise and submit relevant medical device information, including brand names, model numbers, and device categories.",
-                  },
-                  {
-                    step: "Step 06",
-                    title: "Applicable Pricing Filings",
-                    description:
-                      "Prepare and assist with relevant forms and submissions, including Form V or other forms where applicable, with pricing details.",
-                  },
-                  {
-                    step: "Step 07",
-                    title: "Compliance Review",
-                    description:
-                      "Review applicable pricing obligations, MRP positions, ceiling price compliance, and supporting documentation.",
-                  },
-                  {
-                    step: "Step 08",
-                    title: "Ongoing Support",
-                    description:
-                      "Assist with relevant updates, new NPPA notifications, periodic returns, and future compliance requirements.",
-                  },
-                ].map((item, index) => (
-                  <ProcessStep
-                    key={item.step}
-                    step={item.step}
-                    title={item.title}
-                    description={item.description}
-                    index={index}
-                  />
-                ))}
-              </div>
-            </div>
+                            {/* Step Title */}
+                            <h4 className="text-sm sm:text-base font-bold text-foreground leading-snug">
+                              {item.title}
+                            </h4>
 
-            <RevealSection delay={0.2}>
-              <div className="mt-8 rounded-xl border border-border bg-muted/30 p-4 flex gap-3">
-                <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-muted-foreground italic">
-                  NPPA does not publish fixed processing timelines. The duration
-                  depends on the completeness of documentation and NPPA's
-                  processing schedule. We do not promise guaranteed approval or
-                  specific government processing timelines.
-                </p>
+                            {/* Step Description */}
+                            <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+                              {item.description}
+                            </p>
+                          </div>
+                        </motion.div>
+
+                        {/* Chevron connector between steps on desktop */}
+                        {index < 3 && (
+                          <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 items-center justify-center h-6 w-6 rounded-full bg-card border border-border text-primary/60 shadow-sm">
+                            <ChevronRight className="h-3.5 w-3.5" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Processing Disclaimer */}
+                <div className="mt-6 rounded-xl border border-border/60 bg-muted/30 p-3.5 flex items-start gap-3">
+                  <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-muted-foreground italic leading-relaxed">
+                    NPPA does not publish fixed processing timelines. Processing duration depends on the completeness of documentation and government evaluation schedules.
+                  </p>
+                </div>
               </div>
             </RevealSection>
           </section>

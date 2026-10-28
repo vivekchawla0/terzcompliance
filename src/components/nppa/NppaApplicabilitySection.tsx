@@ -14,8 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import govBuildingImg from "@/assets/nppa-gov-building.jpg";
-import medicalDevicesImg from "@/assets/nppa-medical-devices.jpg";
+import nppaBgImg from "@/assets/nppa-applicability-bg.jpg";
 
 /* ─── Applicability Card Interface ─── */
 interface ApplicabilityCardData {
@@ -694,17 +693,15 @@ export const NppaApplicabilitySection: React.FC = () => {
       id="nppa-applicability-section"
       className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F7FAFE] to-[#FFFFFF] py-14 sm:py-18 lg:py-20"
     >
-      {/* ── ATMOSPHERIC BACKGROUND ILLUMINATION ── */}
+      {/* ── SUPPLIED OFFICIAL BACKGROUND IMAGE (Direct Match to Change One) ── */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[600px] rounded-full blur-3xl opacity-60"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(21,188,223,0.2) 0%, rgba(22,119,232,0.12) 45%, transparent 70%)",
-          }}
+        <img
+          src={nppaBgImg}
+          alt="NPPA Applicability Background"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-blue-100/40 blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-cyan-100/35 blur-3xl" />
+        {/* Subtle translucent overlay to ensure text readability and blend with adjacent sections */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-white/80 pointer-events-none" />
       </div>
 
       {/* ── SECTION CONTENT CONTAINER ── */}
@@ -746,52 +743,6 @@ export const NppaApplicabilitySection: React.FC = () => {
             Exact pixel-accurate reproduction of Reference Image 1
            ═══════════════════════════════════════════════════════════════ */}
         <div className="hidden lg:block relative w-full h-[720px] xl:h-[760px]">
-          {/* ── LEFT BACKGROUND: INDIAN NPPA REGULATORY BUILDING ── */}
-          <div
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-[420px] xl:w-[480px] h-[580px] xl:h-[640px] pointer-events-none select-none z-0"
-            style={{
-              maskImage:
-                "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 55%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 55%, transparent 100%)",
-            }}
-          >
-            <motion.div
-              className="w-full h-full relative"
-              animate={shouldReduceMotion ? {} : { y: [0, -5, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <img
-                src={govBuildingImg}
-                alt="NPPA Regulatory Government Building"
-                className="w-full h-full object-contain object-left opacity-85 xl:opacity-95 mix-blend-multiply filter contrast-[1.04] saturate-[0.98]"
-              />
-            </motion.div>
-          </div>
-
-          {/* ── RIGHT BACKGROUND: CLINICAL MEDICAL EQUIPMENT & ICU MONITOR ── */}
-          <div
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-[420px] xl:w-[480px] h-[580px] xl:h-[640px] pointer-events-none select-none z-0"
-            style={{
-              maskImage:
-                "linear-gradient(to left, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 55%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to left, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 55%, transparent 100%)",
-            }}
-          >
-            <motion.div
-              className="w-full h-full relative"
-              animate={shouldReduceMotion ? {} : { y: [0, 5, 0] }}
-              transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            >
-              <img
-                src={medicalDevicesImg}
-                alt="Medical Devices and ICU Patient Monitor"
-                className="w-full h-full object-contain object-right opacity-85 xl:opacity-95 mix-blend-multiply filter contrast-[1.04] saturate-[0.98]"
-              />
-            </motion.div>
-          </div>
-
           {/* ── CENTER: 3D PEDESTAL, ORBITAL RINGS, NPPA DOCUMENT & SHIELD ── */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <CentralAmphitheaterRig />
