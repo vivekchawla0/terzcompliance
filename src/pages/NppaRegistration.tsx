@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { SEO } from "@/components/SEO";
 import FloatingElements from "@/components/FloatingElements";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import AnimatedServiceCard from "@/components/AnimatedServiceCard";
@@ -244,35 +245,13 @@ const NppaRegistration = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
   const { ref: relatedRef, isVisible: relatedVisible } = useScrollAnimation();
 
-  useEffect(() => {
-    document.title =
-      "NPPA Registration for Medical Devices in India | Terz Compliance";
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.setAttribute("name", "description");
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute(
-      "content",
-      "Expert assistance with NPPA registration, IPDMS 2.0, medical device pricing compliance, applicable DPCO filings and ongoing regulatory support in India."
-    );
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute(
-      "href",
-      "https://www.terzcompliance.com/services/nppa-registration-medical-devices"
-    );
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="NPPA Registration for Medical Devices in India | Terz Compliance"
+        description="Expert assistance with NPPA registration, IPDMS 2.0 portal submissions, medical device pricing compliance, DPCO 2013 filings, and ongoing monitoring."
+        canonical="https://www.terzcompliance.com/services/nppa-registration-medical-devices"
+      />
       {/* ── HERO SECTION ── */}
       <section ref={heroRef} className="relative overflow-hidden py-20 lg:py-32">
         <motion.div

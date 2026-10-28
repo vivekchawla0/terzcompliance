@@ -7,6 +7,7 @@ import IECContent from "@/components/services/IECContent";
 import EPRContent from "@/components/services/EPRContent";
 import WholesaleLicenseContent from "@/components/services/WholesaleLicenseContent";
 import { useLocation, Link } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -1205,6 +1206,11 @@ const ServiceDetail = ({ initialServiceId }: ServiceDetailProps) => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={`${activeService?.title || "Service Details"} | Terz Compliance`}
+        description={activeService?.description || "Explore end-to-end regulatory support and step-by-step compliance processes in India with Terz Compliance."}
+        canonical="https://www.terzcompliance.com/services"
+      />
       {/* Dynamic Hero Section */}
       <section
         ref={heroRef}

@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
+import { SEO } from "@/components/SEO";
+
 const Contact = () => {
   const {
     toast
@@ -18,6 +20,11 @@ const Contact = () => {
     });
   };
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Contact Our Regulatory Experts | Terz Compliance"
+        description="Get in touch with Terz Compliance for regulatory strategy, CDSCO licensing, NPPA pricing compliance, or market entry consultations."
+        canonical="https://www.terzcompliance.com/contact"
+      />
       {/* Header */}
       <section className="py-[3vh] lg:py-[4vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,6 +73,7 @@ const Contact = () => {
                       <select id="service" required className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground">
                         <option value="">Select a service</option>
                         <option value="medical-devices">Medical Devices</option>
+                        <option value="nppa-registration">NPPA Registration</option>
                         <option value="ivd">In-Vitro Diagnostics</option>
                         <option value="cosmetics">Cosmetics</option>
                         <option value="lmpc">Legal Metrology</option>

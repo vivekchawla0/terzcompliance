@@ -31,6 +31,15 @@ export const searchIndex: SearchEntry[] = [
     section: "Services",
   },
 
+  // NPPA Registration
+  {
+    title: "NPPA Registration for Medical Devices",
+    content:
+      "NPPA Registration NPPA Medical Devices Medical Device Pricing Compliance DPCO 2013 IPDMS 2.0 NPPA Applicability NPPA Compliance India Medical Device Price Reporting National Pharmaceutical Pricing Authority Department of Pharmaceuticals scheduled non-scheduled medical devices ceiling price Form V Form II Form 20 annual MRP increase 10 percent monitoring price list submission medical device pricing regulations compliance consultancy",
+    path: "/services/nppa-registration-medical-devices",
+    section: "Services",
+  },
+
   // IVD
   {
     title: "In-Vitro Diagnostics (IVD)",

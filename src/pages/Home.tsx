@@ -86,6 +86,8 @@ const services = [
 }];
 
 
+import { SEO } from "@/components/SEO";
+
 const glassPanel = "border border-border/60 bg-card shadow-surface";
 
 const Home = () => {
@@ -102,6 +104,11 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Terz Compliance | Regulatory Compliance Services in India"
+        description="Terz Compliance helps manufacturers, importers, and distributors navigate CDSCO medical device licensing, NPPA pricing compliance, IVD, cosmetics, and EPR in India."
+        canonical="https://www.terzcompliance.com"
+      />
       {/* ========== SECTION 1: New Hero Section with Floating Cards ========== */}
       <HeroSection />
 

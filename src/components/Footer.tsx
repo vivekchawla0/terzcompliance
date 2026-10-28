@@ -160,7 +160,9 @@ const Footer = () => {
               © {new Date().getFullYear()} Terz Compliance. All rights reserved.
             </p>
             <div className="flex flex-wrap gap-6">
-              
+              <Link to="/privacy" className="transition-colors duration-300 hover:text-accent">
+                Privacy Policy
+              </Link>
               <Link to="/terms" className="transition-colors duration-300 hover:text-accent">
                 Terms & Conditions
               </Link>

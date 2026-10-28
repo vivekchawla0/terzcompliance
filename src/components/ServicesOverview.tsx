@@ -16,6 +16,7 @@ import iecImg from "@/assets/iec.jpg";
 import eprImg from "@/assets/epr.jpg";
 import wholesaleLicenseImg from "@/assets/wholesale-license.jpg";
 import heroRegulatoryImg from "@/assets/hero-regulatory.jpg";
+import nppaImg from "@/assets/nppa-registration.jpg";
 
 type ServiceCardData = {
   id: string;
@@ -23,6 +24,7 @@ type ServiceCardData = {
   tagline: string;
   image: string;
   badge?: string;
+  link?: string;
 };
 
 const servicesData: ServiceCardData[] = [
@@ -32,6 +34,14 @@ const servicesData: ServiceCardData[] = [
     tagline: "Smooth CDSCO registration for manufacturers and importers",
     image: medicalDevicesImg,
     badge: "CDSCO",
+  },
+  {
+    id: "nppa-registration",
+    title: "NPPA Registration",
+    tagline: "Medical device pricing compliance, IPDMS 2.0 registration and DPCO filings",
+    image: nppaImg,
+    badge: "NPPA / IPDMS",
+    link: "/services/nppa-registration-medical-devices",
   },
   {
     id: "ivd",
@@ -100,6 +110,8 @@ const whyChooseUs = [
   },
 ];
 
+import { SEO } from "@/components/SEO";
+
 const ServicesOverview = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
@@ -108,6 +120,11 @@ const ServicesOverview = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Regulatory Compliance Services in India | Terz Compliance"
+        description="Comprehensive regulatory compliance solutions in India: Medical Devices, NPPA pricing compliance, IVD, Cosmetics, Legal Metrology, IEC, and EPR."
+        canonical="https://www.terzcompliance.com/services"
+      />
       {/* Hero Section */}
       <section ref={heroRef} className="relative overflow-hidden py-20 lg:py-32">
         <div className="absolute inset-0">
@@ -192,24 +209,13 @@ const ServicesOverview = () => {
           </p>
         </motion.div>
 
-        {/* First row: 3 cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {servicesData.slice(0, 3).map((service, index) => (
+        {/* Balanced 8-card grid: 4 cols on desktop, 2 on tablet, 1 on mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {servicesData.map((service, index) => (
             <AnimatedServiceCard
               key={service.id}
               {...service}
               index={index}
-              isVisible={gridVisible}
-            />
-          ))}
-        </div>
-        {/* Second row: 4 cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-6 lg:mt-8">
-          {servicesData.slice(3).map((service, index) => (
-            <AnimatedServiceCard
-              key={service.id}
-              {...service}
-              index={index + 3}
               isVisible={gridVisible}
             />
           ))}

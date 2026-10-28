@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { SEO } from "@/components/SEO";
 const About = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -196,6 +197,11 @@ const About = () => {
     date: "May 24, 2023"
   }];
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="About Terz Compliance | India Regulatory Affairs Specialists"
+        description="Learn about Terz Compliance, our team of seasoned regulatory affairs specialists, mission, and trusted compliance advisory services in India."
+        canonical="https://www.terzcompliance.com/about"
+      />
       {/* Header / Hero */}
       <section className="bg-gradient-to-br from-primary/5 via-background to-primary/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

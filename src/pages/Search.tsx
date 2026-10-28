@@ -3,6 +3,7 @@ import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { Search as SearchIcon, ArrowRight, FileText } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { searchIndex } from "@/data/searchIndex";
+import { SEO } from "@/components/SEO";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,6 +83,12 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Search Regulatory Services & Insights | Terz Compliance"
+        description="Search across Terz Compliance services, regulatory frameworks, compliance roadmaps, and insights."
+        canonical="https://www.terzcompliance.com/search"
+        robots="noindex, follow"
+      />
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">

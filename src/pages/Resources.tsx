@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { resources as staticResources } from "@/data/resources";
 import type { ResourceItem } from "@/data/resources";
 import { useNewsArticles } from "@/hooks/useNewsArticles";
+import { SEO } from "@/components/SEO";
 
 type FilterKey = "all" | "news" | "blog";
 
@@ -126,6 +127,11 @@ const Resources = () => {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
+      <SEO
+        title="Regulatory Compliance Insights & Knowledge Center | Terz Compliance"
+        description="Stay updated with regulatory news, CDSCO notifications, LMPC circulars, and strategic compliance guidance for the Indian market."
+        canonical="https://www.terzcompliance.com/resources"
+      />
       {/* Enhanced Hero Section */}
       <section className="relative overflow-hidden p-0">
         <div className="pointer-events-none absolute inset-0">

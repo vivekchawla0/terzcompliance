@@ -1,9 +1,16 @@
 import { useEffect } from "react";
+import { SEO } from "@/components/SEO";
+
 const Terms = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return <div className="min-h-screen bg-background">
+      <SEO
+        title="Terms & Conditions | Terz Compliance"
+        description="Review the Terms and Conditions governing services, agreements, and client engagements with Terz Compliance."
+        canonical="https://www.terzcompliance.com/terms"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-[8vh]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--primary)/0.08),transparent_50%)]" />

@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { resources } from "@/data/resources";
 import { useNewsArticles } from "@/hooks/useNewsArticles";
+import { SEO } from "@/components/SEO";
 
 const ResourceDetail = () => {
   const params = useParams<{ type: string; slug: string }>();
@@ -44,6 +45,11 @@ const ResourceDetail = () => {
   if (!resource) {
     return (
       <div className="container mx-auto flex min-h-[60vh] flex-col items-center justify-center gap-6 px-4 text-center">
+        <SEO
+          title="Resource Not Found | Terz Compliance"
+          description="The requested resource could not be found."
+          robots="noindex, follow"
+        />
         <h1 className="text-3xl font-semibold">Resource not found</h1>
         <p className="max-w-xl text-muted-foreground">
           The article you are looking for may have been moved. Explore the knowledge center to find the latest updates.
@@ -72,6 +78,12 @@ const ResourceDetail = () => {
 
   return (
     <article className="min-h-screen bg-background text-foreground">
+      <SEO
+        title={`${resource.title} | Terz Compliance`}
+        description={resource.excerpt || "Read regulatory compliance analysis and industry guidance from Terz Compliance."}
+        canonical={`https://www.terzcompliance.com/resources/${resource.type}/${resource.slug}`}
+        ogType="article"
+      />
       <section className={cn("relative overflow-hidden pb-28 pt-32", `bg-gradient-to-br ${heroGradient}`)}>
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-15%] top-24 h-80 w-80 rounded-full bg-brand-200/35 blur-3xl animate-float-slow" />
