@@ -348,7 +348,7 @@ const NppaRegistration = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap gap-4"
+              className="flex items-center"
             >
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button
@@ -357,16 +357,6 @@ const NppaRegistration = () => {
                   className="shadow-lg shadow-primary/25 bg-white text-primary hover:bg-white/90"
                 >
                   <Link to="/contact">Book a Free Consultation</Link>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10"
-                >
-                  <Link to="/services">Explore Our Services</Link>
                 </Button>
               </motion.div>
             </motion.div>
