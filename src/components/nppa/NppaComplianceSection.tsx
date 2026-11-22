@@ -11,6 +11,24 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/* ─── Media Query Hook to eliminate duplicate DOM mounting ─── */
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = React.useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : true
+  );
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    setIsDesktop(mql.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  return isDesktop;
+};
+
 /* ─── Compliance Data ─── */
 interface ComplianceItem {
   icon: LucideIcon;
@@ -65,26 +83,21 @@ const complianceData: ComplianceItem[] = [
 ];
 
 /* ─── 3D Medical Compliance Clipboard (Left Decorative Object) ─── */
-const ComplianceClipboard3D = () => {
+const ComplianceClipboard3D = React.memo(({ isSectionInView = true }: { isSectionInView?: boolean }) => {
   const shouldReduceMotion = useReducedMotion();
+  const animState = isSectionInView ? "running" : "paused";
 
   return (
     <div className="relative w-64 h-80 flex items-center justify-center select-none pointer-events-none perspective-[1200px]">
-      {/* Outer Orbital Curve 1 */}
-      <motion.svg
+      {/* Outer Orbital Curve 1 - GPU CSS Keyframe */}
+      <svg
         viewBox="0 0 260 220"
         className="absolute inset-0 w-full h-full overflow-visible z-0 pointer-events-none"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                rotate: [0, 360],
-              }
-        }
-        transition={{
-          duration: 32,
-          repeat: Infinity,
-          ease: "linear",
+        style={{
+          transformOrigin: "130px 110px",
+          animation: shouldReduceMotion ? "none" : "nppaClipOrbit1 32s linear infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         <defs>
@@ -114,23 +127,17 @@ const ComplianceClipboard3D = () => {
             repeatCount="indefinite"
           />
         </circle>
-      </motion.svg>
+      </svg>
 
-      {/* Outer Orbital Curve 2 */}
-      <motion.svg
+      {/* Outer Orbital Curve 2 - GPU CSS Keyframe */}
+      <svg
         viewBox="0 0 260 220"
         className="absolute inset-0 w-full h-full overflow-visible z-0 pointer-events-none"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                rotate: [360, 0],
-              }
-        }
-        transition={{
-          duration: 26,
-          repeat: Infinity,
-          ease: "linear",
+        style={{
+          transformOrigin: "130px 110px",
+          animation: shouldReduceMotion ? "none" : "nppaClipOrbit2 26s linear infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         <ellipse
@@ -145,28 +152,16 @@ const ComplianceClipboard3D = () => {
           transform="rotate(30 130 110)"
         />
         <circle cx="45" cy="92" r="2.5" fill="#60A5FA" opacity="0.75" />
-      </motion.svg>
+      </svg>
 
-      {/* Main 3D Floating Clipboard Entity */}
-      <motion.div
+      {/* Main 3D Floating Clipboard Entity - GPU Accelerated */}
+      <div
         className="relative z-10 w-48 h-64 sm:w-52 sm:h-72"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                y: [-8, 8, -8],
-                rotateY: [-5, 5, -5],
-                rotateX: [3, -3, 3],
-                rotateZ: [-1.5, 1.5, -1.5],
-              }
-        }
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
         style={{
           transformStyle: "preserve-3d",
+          animation: shouldReduceMotion ? "none" : "nppaClipboardFloat 7s ease-in-out infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         {/* Layer 1: Board Base with 3D drop shadow */}
@@ -256,32 +251,28 @@ const ComplianceClipboard3D = () => {
             <div className="w-1.5 h-1.5 rounded-full bg-slate-500/60 shadow-inner" />
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
-};
+});
+ComplianceClipboard3D.displayName = "ComplianceClipboard3D";
 
 /* ─── Translucent Blue Compliance Shield (Right Decorative Object) ─── */
-const ComplianceShield3D = () => {
+const ComplianceShield3D = React.memo(({ isSectionInView = true }: { isSectionInView?: boolean }) => {
   const shouldReduceMotion = useReducedMotion();
+  const animState = isSectionInView ? "running" : "paused";
 
   return (
     <div className="relative w-64 h-80 flex items-center justify-center select-none pointer-events-none perspective-[1200px]">
-      {/* Outer Orbital Curve 1 */}
-      <motion.svg
+      {/* Outer Orbital Curve 1 - GPU CSS Keyframe */}
+      <svg
         viewBox="0 0 260 220"
         className="absolute inset-0 w-full h-full overflow-visible z-0 pointer-events-none"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                rotate: [360, 0],
-              }
-        }
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear",
+        style={{
+          transformOrigin: "130px 110px",
+          animation: shouldReduceMotion ? "none" : "nppaShieldOrbit1 30s linear infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         <defs>
@@ -310,23 +301,17 @@ const ComplianceShield3D = () => {
             repeatCount="indefinite"
           />
         </circle>
-      </motion.svg>
+      </svg>
 
-      {/* Outer Orbital Curve 2 */}
-      <motion.svg
+      {/* Outer Orbital Curve 2 - GPU CSS Keyframe */}
+      <svg
         viewBox="0 0 260 220"
         className="absolute inset-0 w-full h-full overflow-visible z-0 pointer-events-none"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                rotate: [0, 360],
-              }
-        }
-        transition={{
-          duration: 24,
-          repeat: Infinity,
-          ease: "linear",
+        style={{
+          transformOrigin: "130px 110px",
+          animation: shouldReduceMotion ? "none" : "nppaShieldOrbit2 24s linear infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         <ellipse
@@ -341,28 +326,16 @@ const ComplianceShield3D = () => {
           transform="rotate(-28 130 110)"
         />
         <circle cx="215" cy="120" r="2.5" fill="#3B82F6" opacity="0.75" />
-      </motion.svg>
+      </svg>
 
-      {/* Main 3D Floating Translucent Shield */}
-      <motion.div
+      {/* Main 3D Floating Translucent Shield - GPU Accelerated */}
+      <div
         className="relative z-10 w-48 h-64 sm:w-52 sm:h-72 flex items-center justify-center"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                y: [8, -8, 8],
-                rotateY: [5, -5, 5],
-                rotateX: [-3, 3, -3],
-                rotateZ: [1.5, -1.5, 1.5],
-              }
-        }
-        transition={{
-          duration: 6.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
         style={{
           transformStyle: "preserve-3d",
+          animation: shouldReduceMotion ? "none" : "nppaShieldFloat 6.5s ease-in-out infinite",
+          animationPlayState: animState,
+          willChange: "transform",
         }}
       >
         {/* Layer 1: Ambient Back Glow */}
@@ -403,7 +376,6 @@ const ComplianceShield3D = () => {
             fill="url(#shieldGlass)"
             stroke="url(#shieldRim)"
             strokeWidth="2.5"
-            className="backdrop-blur-md"
           />
 
           {/* Inner Decorative Contour */}
@@ -459,14 +431,16 @@ const ComplianceShield3D = () => {
             DPCO COMPLIANT
           </span>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
-};
+});
+ComplianceShield3D.displayName = "ComplianceShield3D";
 
 /* ─── Ambient Particles & Light Movement ─── */
-const AmbientAtmosphere = () => {
+const AmbientAtmosphere = React.memo(({ isSectionInView = true }: { isSectionInView?: boolean }) => {
   const shouldReduceMotion = useReducedMotion();
+  const animState = isSectionInView ? "running" : "paused";
 
   // Subtle floating particle coordinates
   const particles = React.useMemo(
@@ -490,39 +464,29 @@ const AmbientAtmosphere = () => {
       aria-hidden="true"
       className="absolute inset-0 pointer-events-none overflow-hidden select-none -z-10"
     >
-      {/* Soft Pale Blue Ambient Glow Orbs - Preserving crisp light theme */}
-      <motion.div
+      {/* Soft Pale Blue Ambient Glow Orbs - Hardware Accelerated */}
+      <div
         className="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-gradient-to-br from-primary/8 via-sky-200/20 to-transparent blur-3xl"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                x: [-15, 15, -15],
-                y: [-10, 10, -10],
-                opacity: [0.4, 0.7, 0.4],
-              }
-        }
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          animation: shouldReduceMotion ? "none" : "nppaAtmosphereBlob1 10s ease-in-out infinite",
+          animationPlayState: animState,
+          willChange: "transform, opacity",
+        }}
       />
-      <motion.div
+      <div
         className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-gradient-to-tl from-primary/10 via-brand-100/30 to-transparent blur-3xl"
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                x: [15, -15, 15],
-                y: [12, -12, 12],
-                opacity: [0.35, 0.65, 0.35],
-              }
-        }
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          animation: shouldReduceMotion ? "none" : "nppaAtmosphereBlob2 12s ease-in-out infinite",
+          animationPlayState: animState,
+          willChange: "transform, opacity",
+        }}
       />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-sky-100/25 blur-3xl rounded-full" />
 
-      {/* Subtle Floating Micro-Particles */}
+      {/* Subtle Floating Micro-Particles - GPU Accelerated */}
       {!shouldReduceMotion &&
         particles.map((p) => (
-          <motion.div
+          <div
             key={p.id}
             className="absolute rounded-full bg-primary/30"
             style={{
@@ -531,23 +495,16 @@ const AmbientAtmosphere = () => {
               width: p.size,
               height: p.size,
               boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
-            }}
-            animate={{
-              y: [-12, 12, -12],
-              x: [-6, 6, -6],
-              opacity: [0.2, 0.65, 0.2],
-            }}
-            transition={{
-              duration: p.dur,
-              delay: p.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
+              animation: `nppaParticleFloat ${p.dur}s ease-in-out ${p.delay}s infinite`,
+              animationPlayState: animState,
+              willChange: "transform, opacity",
             }}
           />
         ))}
     </div>
   );
-};
+});
+AmbientAtmosphere.displayName = "AmbientAtmosphere";
 
 /* ─── Individual Compliance Card with Interactive Icon & Staggered Reveal ─── */
 interface ComplianceCardProps {
@@ -556,7 +513,7 @@ interface ComplianceCardProps {
   isInView: boolean;
 }
 
-const ComplianceCard = ({ item, index, isInView }: ComplianceCardProps) => {
+const ComplianceCard = React.memo(({ item, index, isInView }: ComplianceCardProps) => {
   const Icon = item.icon;
   const shouldReduceMotion = useReducedMotion();
   const [isHovered, setIsHovered] = React.useState(false);
@@ -577,53 +534,35 @@ const ComplianceCard = ({ item, index, isInView }: ComplianceCardProps) => {
       whileHover={shouldReduceMotion ? {} : { y: -5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ contain: "layout style" }}
       className="group relative rounded-2xl border border-border/80 bg-card p-6 lg:p-7 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.12)] hover:border-primary/40 transition-all duration-300 flex flex-col justify-between overflow-hidden"
     >
-      {/* Subtle Top-Corner Pale Blue Accent Glow on Card Hover */}
-      <div
-        className={cn(
-          "absolute -top-12 -right-12 w-28 h-28 rounded-full bg-primary/10 blur-xl pointer-events-none transition-opacity duration-500",
-          isHovered ? "opacity-100" : "opacity-0"
-        )}
-      />
+      {/* Top subtle highlight shimmer border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div>
-        {/* Card Header: Icon with Hover Scale & Glow + Pill Tag */}
-        <div className="flex items-center justify-between mb-5">
+        {/* Card Header: Icon with Soft Pill + Category Badge */}
+        <div className="flex items-start justify-between gap-3 mb-5">
           <motion.div
-            className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 border border-primary/15 text-primary transition-all duration-300"
+            className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 via-primary/15 to-primary/5 text-primary border border-primary/20 shadow-sm"
             animate={
               isHovered && !shouldReduceMotion
-                ? {
-                    scale: 1.12,
-                    boxShadow: "0 0 24px -2px rgba(59, 130, 246, 0.4)",
-                  }
-                : {
-                    scale: 1,
-                    boxShadow: "0 0 0px 0px rgba(59, 130, 246, 0)",
-                  }
+                ? { scale: 1.08, rotate: 4 }
+                : { scale: 1, rotate: 0 }
             }
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ type: "spring", stiffness: 350, damping: 20 }}
           >
-            <motion.div
-              animate={
-                isHovered && !shouldReduceMotion
-                  ? { rotate: [0, -6, 6, 0] }
-                  : { rotate: 0 }
-              }
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-            >
-              <Icon className="h-6 w-6 text-primary transition-colors" />
-            </motion.div>
+            <Icon className="h-6 w-6 stroke-[2]" />
           </motion.div>
 
-          <span className="text-[11px] font-semibold text-primary/80 bg-primary/[0.07] px-2.5 py-1 rounded-full border border-primary/15">
+          {/* Badge */}
+          <span className="text-[11px] font-semibold text-primary/80 bg-primary/5 px-2.5 py-1 rounded-full border border-primary/15 tracking-wide">
             {item.badge}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors duration-200">
+        <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
           {item.title}
         </h3>
 
@@ -633,37 +572,106 @@ const ComplianceCard = ({ item, index, isInView }: ComplianceCardProps) => {
         </p>
       </div>
 
-      {/* Bottom Subtle Indicator Line */}
-      <div className="mt-5 pt-3 border-t border-border/40 flex items-center justify-between">
-        <span className="text-[11px] font-medium text-slate-400 group-hover:text-primary/70 transition-colors">
-          Statutory Requirement
+      {/* Card Footer: Subtle Micro-Indicator */}
+      <div className="pt-4 mt-4 border-t border-border/40 flex items-center justify-between text-xs text-muted-foreground/70">
+        <span className="font-medium group-hover:text-foreground transition-colors">
+          Compliance Pillar 0{index + 1}
         </span>
         <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-primary transition-colors" />
       </div>
     </motion.div>
   );
-};
+});
+ComplianceCard.displayName = "ComplianceCard";
 
 /* ─── Main Transformed NppaComplianceSection Component ─── */
 export const NppaComplianceSection = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-60px" });
+  const isSectionInView = useInView(containerRef, { margin: "200px" });
   const shouldReduceMotion = useReducedMotion();
+  const isDesktop = useIsDesktop();
 
   return (
     <section
       ref={containerRef}
       className="w-full relative py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-primary/[0.02] via-primary/[0.04] to-transparent border-y border-primary/10 overflow-hidden"
     >
+      {/* Scoped CSS Keyframes for GPU-accelerated Off-Main-Thread animations */}
+      <style>{`
+        @keyframes nppaClipOrbit1 {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes nppaClipOrbit2 {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        @keyframes nppaClipboardFloat {
+          0%, 100% {
+            transform: translate3d(0, -8px, 0) rotateY(-5deg) rotateX(3deg) rotateZ(-1.5deg);
+          }
+          50% {
+            transform: translate3d(0, 8px, 0) rotateY(5deg) rotateX(-3deg) rotateZ(1.5deg);
+          }
+        }
+        @keyframes nppaShieldOrbit1 {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        @keyframes nppaShieldOrbit2 {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes nppaShieldFloat {
+          0%, 100% {
+            transform: translate3d(0, 8px, 0) rotateY(5deg) rotateX(-3deg) rotateZ(1.5deg);
+          }
+          50% {
+            transform: translate3d(0, -8px, 0) rotateY(-5deg) rotateX(3deg) rotateZ(-1.5deg);
+          }
+        }
+        @keyframes nppaAtmosphereBlob1 {
+          0%, 100% {
+            transform: translate3d(-15px, -10px, 0);
+            opacity: 0.4;
+          }
+          50% {
+            transform: translate3d(15px, 10px, 0);
+            opacity: 0.7;
+          }
+        }
+        @keyframes nppaAtmosphereBlob2 {
+          0%, 100% {
+            transform: translate3d(15px, 12px, 0);
+            opacity: 0.35;
+          }
+          50% {
+            transform: translate3d(-15px, -12px, 0);
+            opacity: 0.65;
+          }
+        }
+        @keyframes nppaParticleFloat {
+          0%, 100% {
+            transform: translate3d(-6px, -12px, 0);
+            opacity: 0.2;
+          }
+          50% {
+            transform: translate3d(6px, 12px, 0);
+            opacity: 0.65;
+          }
+        }
+      `}</style>
+
       {/* Atmospheric Ambient Light & Floating Particles */}
-      <AmbientAtmosphere />
+      <AmbientAtmosphere isSectionInView={isSectionInView} />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Upper Hero Grid: 3D Clipboard (Left) + Header Text (Center) + 3D Shield (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_280px] xl:grid-cols-[320px_1fr_320px] items-center justify-between gap-6 xl:gap-8 mb-12 sm:mb-16">
           {/* Left Column: 3D Clipboard (Desktop / Laptop) */}
           <div className="hidden lg:flex items-center justify-center">
-            <ComplianceClipboard3D />
+            {isDesktop && <ComplianceClipboard3D isSectionInView={isSectionInView} />}
           </div>
 
           {/* Center Column: Section Title & Subtitle */}
@@ -692,19 +700,21 @@ export const NppaComplianceSection = () => {
 
           {/* Right Column: 3D Shield (Desktop / Laptop) */}
           <div className="hidden lg:flex items-center justify-center">
-            <ComplianceShield3D />
+            {isDesktop && <ComplianceShield3D isSectionInView={isSectionInView} />}
           </div>
         </div>
 
         {/* Mobile / Tablet Presentation of 3D Objects: Centered & Unclipped */}
-        <div className="lg:hidden flex items-center justify-center gap-4 sm:gap-8 mb-10 w-full overflow-hidden">
-          <div className="scale-[0.78] sm:scale-[0.88] origin-center">
-            <ComplianceClipboard3D />
+        {!isDesktop && (
+          <div className="lg:hidden flex items-center justify-center gap-4 sm:gap-8 mb-10 w-full overflow-hidden">
+            <div className="scale-[0.78] sm:scale-[0.88] origin-center">
+              <ComplianceClipboard3D isSectionInView={isSectionInView} />
+            </div>
+            <div className="scale-[0.78] sm:scale-[0.88] origin-center">
+              <ComplianceShield3D isSectionInView={isSectionInView} />
+            </div>
           </div>
-          <div className="scale-[0.78] sm:scale-[0.88] origin-center">
-            <ComplianceShield3D />
-          </div>
-        </div>
+        )}
 
         {/* 6 Compliance Cards in a Balanced 3-Column, 2-Row Layout on Desktop */}
         <div className="max-w-5xl xl:max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">

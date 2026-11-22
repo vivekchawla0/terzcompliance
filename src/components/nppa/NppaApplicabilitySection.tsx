@@ -16,6 +16,24 @@ import {
 import { cn } from "@/lib/utils";
 import nppaBgImg from "@/assets/nppa-applicability-bg.jpg";
 
+/* ─── Media Query Hook to eliminate duplicate DOM mounting ─── */
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = React.useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : true
+  );
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    setIsDesktop(mql.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  return isDesktop;
+};
+
 /* ─── Applicability Card Interface ─── */
 interface ApplicabilityCardData {
   number: string;
@@ -77,7 +95,7 @@ const applicabilityCards: ApplicabilityCardData[] = [
 ];
 
 /* ─── Chrome Specular Sphere ─── */
-const ChromeSphere = ({
+const ChromeSphere = React.memo(({
   size = 18,
   className = "",
   style,
@@ -95,13 +113,15 @@ const ChromeSphere = ({
         "radial-gradient(circle at 30% 25%, #FFFFFF 0%, #E2EDF8 30%, #94B0CC 70%, #5B7B9E 100%)",
       boxShadow:
         "0 4px 10px rgba(91,123,158,0.35), inset 0 -2px 4px rgba(0,0,0,0.22), inset 0 2px 3px rgba(255,255,255,0.8)",
+      willChange: "transform",
       ...style,
     }}
   />
-);
+));
+ChromeSphere.displayName = "ChromeSphere";
 
 /* ─── Blue Glass Sphere ─── */
-const BlueGlassSphere = ({
+const BlueGlassSphere = React.memo(({
   size = 16,
   className = "",
   style,
@@ -119,13 +139,15 @@ const BlueGlassSphere = ({
         "radial-gradient(circle at 35% 30%, #7FE0FF 0%, #1677E8 55%, #0B4A94 100%)",
       boxShadow:
         "0 6px 14px rgba(22,119,232,0.45), 0 0 10px rgba(21,188,223,0.35), inset 0 2px 4px rgba(255,255,255,0.7)",
+      willChange: "transform",
       ...style,
     }}
   />
-);
+));
+BlueGlassSphere.displayName = "BlueGlassSphere";
 
 /* ─── Floating Circular Coin Badge ─── */
-const OrbitalCoinBadge = ({
+const OrbitalCoinBadge = React.memo(({
   icon: Icon,
   className = "",
   style,
@@ -147,27 +169,27 @@ const OrbitalCoinBadge = ({
       <Icon className="h-4 w-4 stroke-[2.2]" />
     </div>
   </motion.div>
-);
+));
+OrbitalCoinBadge.displayName = "OrbitalCoinBadge";
 
 /* ─── 3D Blue Compliance Shield (Matching Reference) ─── */
-const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
+const ComplianceShield3D = React.memo(({
+  className = "",
+  isSectionInView = true,
+}: {
+  className?: string;
+  isSectionInView?: boolean;
+}) => {
   const shouldReduceMotion = useReducedMotion();
+  const animState = isSectionInView ? "running" : "paused";
 
   return (
-    <motion.div
+    <div
       className={cn("pointer-events-none select-none z-20", className)}
-      animate={
-        shouldReduceMotion
-          ? {}
-          : {
-              y: [0, -6, 0],
-              rotate: [-1, 2, -1],
-            }
-      }
-      transition={{
-        duration: 4.8,
-        repeat: Infinity,
-        ease: "easeInOut",
+      style={{
+        animation: shouldReduceMotion ? "none" : "nppaAppShieldFloat 4.8s ease-in-out infinite",
+        animationPlayState: animState,
+        willChange: "transform",
       }}
     >
       <div className="relative w-14 h-16 sm:w-16 sm:h-20 flex items-center justify-center">
@@ -249,12 +271,13 @@ const ComplianceShield3D = ({ className = "" }: { className?: string }) => {
           />
         </svg>
       </div>
-    </motion.div>
+    </div>
   );
-};
+});
+ComplianceShield3D.displayName = "ComplianceShield3D";
 
 /* ─── 3D Magnifying Glass (Matching Reference) ─── */
-const MagnifyingGlass3D = () => (
+const MagnifyingGlass3D = React.memo(() => (
   <div className="relative w-20 h-20 sm:w-24 sm:h-24 pointer-events-none select-none">
     <svg
       viewBox="0 0 84 84"
@@ -337,10 +360,11 @@ const MagnifyingGlass3D = () => (
       />
     </svg>
   </div>
-);
+));
+MagnifyingGlass3D.displayName = "MagnifyingGlass3D";
 
 /* ─── Single Floating Applicability Card ─── */
-const FloatingApplicabilityCard = ({
+const FloatingApplicabilityCard = React.memo(({
   card,
   index,
   className = "",
@@ -357,7 +381,7 @@ const FloatingApplicabilityCard = ({
   return (
     <motion.div
       ref={ref}
-      className={cn("w-full transition-all", className)}
+      className={cn("w-full", className)}
       initial={{ opacity: 0, y: 25, scale: 0.95 }}
       animate={
         isInView
@@ -369,22 +393,24 @@ const FloatingApplicabilityCard = ({
         delay: index * 0.08,
         ease: "easeOut",
       }}
+      style={{ contain: "layout style" }}
     >
       <motion.div
-        className="group relative rounded-3xl bg-white/92 backdrop-blur-xl border border-white/95 p-5 xl:p-6 transition-all duration-300"
+        className="group relative rounded-3xl bg-white/92 backdrop-blur-xl border border-white/95 p-5 xl:p-6"
         style={{
           boxShadow:
             "0 18px 45px rgba(22,119,232,0.11), 0 3px 12px rgba(0,0,0,0.03), inset 0 1px 2px rgba(255,255,255,0.95)",
+          willChange: "transform",
         }}
         whileHover={
           shouldReduceMotion
             ? {}
             : {
-                y: -5,
-                scale: 1.015,
-                boxShadow:
-                  "0 24px 60px rgba(22,119,232,0.20), 0 6px 18px rgba(21,188,223,0.18), inset 0 1px 2px rgba(255,255,255,1)",
-              }
+              y: -5,
+              scale: 1.015,
+              boxShadow:
+                "0 24px 60px rgba(22,119,232,0.20), 0 6px 18px rgba(21,188,223,0.18), inset 0 1px 2px rgba(255,255,255,1)",
+            }
         }
         transition={{ type: "spring", stiffness: 350, damping: 25 }}
       >
@@ -414,13 +440,15 @@ const FloatingApplicabilityCard = ({
       </motion.div>
     </motion.div>
   );
-};
+});
+FloatingApplicabilityCard.displayName = "FloatingApplicabilityCard";
 
 /* ─── Central Amphitheater Rig (Pedestal, Rings, Document, Shield, Badges) ─── */
-const CentralAmphitheaterRig = () => {
+const CentralAmphitheaterRig = React.memo(({ isSectionInView = true }: { isSectionInView?: boolean }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const animState = isSectionInView ? "running" : "paused";
 
   return (
     <div
@@ -428,47 +456,29 @@ const CentralAmphitheaterRig = () => {
       className="relative w-[340px] sm:w-[420px] md:w-[480px] xl:w-[540px] h-[520px] sm:h-[560px] flex items-center justify-center select-none"
       style={{ perspective: "1200px" }}
     >
-      {/* ── Rotating 3D Orbital Rings ── */}
+      {/* ── Rotating 3D Orbital Rings (GPU Hardware Composited) ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-0">
         {/* Ring 1: Wide Outer Cyan Ellipse (Clockwise) */}
-        <motion.div
-          className="absolute w-[440px] sm:w-[560px] md:w-[680px] xl:w-[780px] h-[220px] sm:h-[260px] md:h-[300px] xl:h-[320px] rounded-[100%] border border-cyan-400/50"
+        <div
+          className="absolute w-[440px] sm:w-[560px] md:w-[680px] xl:w-[780px] h-[220px] sm:h-[260px] md:h-[300px] xl:h-[320px] rounded-[100%] border border-cyan-400/50 pointer-events-none"
           style={{
             transform: "rotateX(72deg) rotateZ(-10deg)",
             boxShadow:
               "0 0 35px rgba(21,188,223,0.25), inset 0 0 25px rgba(22,119,232,0.18)",
-          }}
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  rotateZ: [-10, 350],
-                }
-          }
-          transition={{
-            duration: 40,
-            repeat: Infinity,
-            ease: "linear",
+            animation: shouldReduceMotion ? "none" : "nppaRing1Spin 40s linear infinite",
+            animationPlayState: animState,
+            willChange: "transform",
           }}
         />
 
         {/* Ring 2: Inner Dashed Blue Ellipse (Counter-Clockwise) */}
-        <motion.div
-          className="absolute w-[360px] sm:w-[460px] md:w-[540px] xl:w-[620px] h-[170px] sm:h-[210px] md:h-[240px] xl:h-[260px] rounded-[100%] border border-dashed border-[#1677E8]/45"
+        <div
+          className="absolute w-[360px] sm:w-[460px] md:w-[540px] xl:w-[620px] h-[170px] sm:h-[210px] md:h-[240px] xl:h-[260px] rounded-[100%] border border-dashed border-[#1677E8]/45 pointer-events-none"
           style={{
             transform: "rotateX(70deg) rotateZ(18deg)",
-          }}
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  rotateZ: [18, -342],
-                }
-          }
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
+            animation: shouldReduceMotion ? "none" : "nppaRing2Spin 30s linear infinite",
+            animationPlayState: animState,
+            willChange: "transform",
           }}
         />
 
@@ -484,7 +494,7 @@ const CentralAmphitheaterRig = () => {
 
       {/* ── 3D Blue Compliance Shield (Right Orbital Flank) ── */}
       <div className="absolute top-[16%] right-[-10px] sm:right-[-25px] md:right-[-45px] xl:right-[-55px] z-30">
-        <ComplianceShield3D />
+        <ComplianceShield3D isSectionInView={isSectionInView} />
       </div>
 
       {/* ── Orbital Badges (Document, Analytics, Legal) ── */}
@@ -495,12 +505,15 @@ const CentralAmphitheaterRig = () => {
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, -5, 0] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          style={{
+            animation: shouldReduceMotion ? "none" : "nppaBadge1Float 4.2s ease-in-out infinite",
+            animationPlayState: animState,
+            willChange: "transform",
+          }}
         >
           <OrbitalCoinBadge icon={FileText} />
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Bar Chart Badge (Lower Left) */}
@@ -510,12 +523,15 @@ const CentralAmphitheaterRig = () => {
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, 5, 0] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        <div
+          style={{
+            animation: shouldReduceMotion ? "none" : "nppaBadge2Float 4.8s ease-in-out 0.5s infinite",
+            animationPlayState: animState,
+            willChange: "transform",
+          }}
         >
           <OrbitalCoinBadge icon={BarChart3} />
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Gavel Badge (Lower Right) */}
@@ -525,12 +541,15 @@ const CentralAmphitheaterRig = () => {
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        <div
+          style={{
+            animation: shouldReduceMotion ? "none" : "nppaBadge3Float 5s ease-in-out 1s infinite",
+            animationPlayState: animState,
+            willChange: "transform",
+          }}
         >
           <OrbitalCoinBadge icon={Gavel} />
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* ── Chrome & Blue Spheres along Orbital Paths ── */}
@@ -540,30 +559,21 @@ const CentralAmphitheaterRig = () => {
       <BlueGlassSphere size={14} className="absolute bottom-[20%] right-[16%] z-10" />
       <ChromeSphere size={16} className="absolute top-[48%] -right-8 z-10" />
 
-      {/* ── Central Floating 3D NPPA Document ── */}
+      {/* ── Central Floating 3D NPPA Document (GPU Hardware Composited) ── */}
       <motion.div
         className="relative z-20 mb-[-10px]"
         initial={{ opacity: 0, y: 35, scale: 0.9 }}
         animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 35, scale: 0.9 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <motion.div
+        <div
           className="relative"
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  y: [0, -8, 0],
-                  rotateY: [-2, 1, -2],
-                  rotateX: [3, 0.5, 3],
-                }
-          }
-          transition={{
-            duration: 5.5,
-            repeat: Infinity,
-            ease: "easeInOut",
+          style={{
+            transformStyle: "preserve-3d",
+            animation: shouldReduceMotion ? "none" : "nppaDocTilt 5.5s ease-in-out infinite",
+            animationPlayState: animState,
+            willChange: "transform",
           }}
-          style={{ transformStyle: "preserve-3d" }}
         >
           {/* Document Body */}
           <div
@@ -640,7 +650,7 @@ const CentralAmphitheaterRig = () => {
               <MagnifyingGlass3D />
             </div>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* ── Floor Pedestal Light Accent (Harmonizing with Background Floor Platform) ── */}
@@ -656,7 +666,8 @@ const CentralAmphitheaterRig = () => {
       </div>
     </div>
   );
-};
+});
+CentralAmphitheaterRig.displayName = "CentralAmphitheaterRig";
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT: NPPA APPLICABILITY SECTION
@@ -664,19 +675,73 @@ const CentralAmphitheaterRig = () => {
    ═══════════════════════════════════════════════════════════════ */
 export const NppaApplicabilitySection: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
+  const sectionRef = React.useRef<HTMLElement>(null);
   const headerRef = React.useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-40px" });
+  const isSectionInView = useInView(sectionRef, { margin: "200px" });
+  const isDesktop = useIsDesktop();
 
   return (
     <section
+      ref={sectionRef}
       id="nppa-applicability-section"
       className="relative w-full overflow-hidden bg-white pt-10 sm:pt-14 pb-14 sm:pb-20 min-h-[850px] lg:min-h-[940px] flex flex-col justify-between"
     >
+      {/* Scoped CSS Keyframes for GPU-accelerated Off-Main-Thread animations */}
+      <style>{`
+        @keyframes nppaRing1Spin {
+          from {
+            transform: rotateX(72deg) rotateZ(-10deg);
+          }
+          to {
+            transform: rotateX(72deg) rotateZ(350deg);
+          }
+        }
+        @keyframes nppaRing2Spin {
+          from {
+            transform: rotateX(70deg) rotateZ(18deg);
+          }
+          to {
+            transform: rotateX(70deg) rotateZ(-342deg);
+          }
+        }
+        @keyframes nppaAppShieldFloat {
+          0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(-1deg);
+          }
+          50% {
+            transform: translate3d(0, -6px, 0) rotate(2deg);
+          }
+        }
+        @keyframes nppaBadge1Float {
+          0%, 100% { transform: translate3d(0, 0, 0); }
+          50% { transform: translate3d(0, -5px, 0); }
+        }
+        @keyframes nppaBadge2Float {
+          0%, 100% { transform: translate3d(0, 0, 0); }
+          50% { transform: translate3d(0, 5px, 0); }
+        }
+        @keyframes nppaBadge3Float {
+          0%, 100% { transform: translate3d(0, 0, 0); }
+          50% { transform: translate3d(0, 6px, 0); }
+        }
+        @keyframes nppaDocTilt {
+          0%, 100% {
+            transform: translate3d(0, 0, 0) rotateY(-2deg) rotateX(3deg);
+          }
+          50% {
+            transform: translate3d(0, -8px, 0) rotateY(1deg) rotateX(0.5deg);
+          }
+        }
+      `}</style>
+
       {/* ── EXTRA LARGE, PROMINENT BACKGROUND IMAGE ── */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
         <img
           src={nppaBgImg}
           alt="NPPA Applicability Background"
+          loading="eager"
+          decoding="async"
           className="w-full h-full object-cover object-bottom xl:object-center transform scale-100 lg:scale-[1.01] transition-transform duration-700"
         />
         {/* Only a subtle soft blend at the extreme top/bottom edges (40px) for seamless page continuity */}
@@ -719,50 +784,50 @@ export const NppaApplicabilitySection: React.FC = () => {
         </motion.div>
 
         {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP MASTER COMPOSITION (lg and xl screens)
-            Six Floating Cards Arranged Orbitally Over the Prominent Background
+            RESPONSIVE COMPOSITION (Desktop vs Tablet/Mobile conditionally rendered)
+            Eliminates duplicate 3D amphitheater rigs and cards from mounting
            ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden lg:block relative w-full h-[760px] xl:h-[820px] 2xl:h-[860px]">
-          {/* ── CENTER: 3D PEDESTAL LIGHT, ORBITAL RINGS, NPPA DOCUMENT & SHIELD ── */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-            <CentralAmphitheaterRig />
-          </div>
-
-          {/* ── THE SIX FLOATING CARDS (ORBITAL ARRANGEMENT FRAMING THE CENTER) ── */}
-          {applicabilityCards.map((card, idx) => (
-            <div
-              key={card.number}
-              className={cn(
-                "absolute w-[310px] xl:w-[350px] z-20",
-                card.desktopClass
-              )}
-            >
-              <FloatingApplicabilityCard card={card} index={idx} />
+        {isDesktop ? (
+          /* Desktop Master Composition (>= 1024px) */
+          <div className="relative w-full h-[760px] xl:h-[820px] 2xl:h-[860px]">
+            {/* ── CENTER: 3D PEDESTAL LIGHT, ORBITAL RINGS, NPPA DOCUMENT & SHIELD ── */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+              <CentralAmphitheaterRig isSectionInView={isSectionInView} />
             </div>
-          ))}
-        </div>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            TABLET & MOBILE COMPOSITION (< lg screens)
-            Central Document first, then clean responsive cards below
-           ═══════════════════════════════════════════════════════════════ */}
-        <div className="lg:hidden flex flex-col items-center gap-10">
-          {/* Scaled Central Visual */}
-          <div className="w-full flex justify-center py-4">
-            <CentralAmphitheaterRig />
-          </div>
-
-          {/* 6 Cards Grid (1 col on mobile, 2 cols on tablet) */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {/* ── THE SIX FLOATING CARDS (ORBITAL ARRANGEMENT FRAMING THE CENTER) ── */}
             {applicabilityCards.map((card, idx) => (
-              <FloatingApplicabilityCard
+              <div
                 key={card.number}
-                card={card}
-                index={idx}
-              />
+                className={cn(
+                  "absolute w-[310px] xl:w-[350px] z-20",
+                  card.desktopClass
+                )}
+              >
+                <FloatingApplicabilityCard card={card} index={idx} />
+              </div>
             ))}
           </div>
-        </div>
+        ) : (
+          /* Tablet & Mobile Composition (< 1024px) */
+          <div className="flex flex-col items-center gap-10">
+            {/* Scaled Central Visual */}
+            <div className="w-full flex justify-center py-4">
+              <CentralAmphitheaterRig isSectionInView={isSectionInView} />
+            </div>
+
+            {/* 6 Cards Grid (1 col on mobile, 2 cols on tablet) */}
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {applicabilityCards.map((card, idx) => (
+                <FloatingApplicabilityCard
+                  key={card.number}
+                  card={card}
+                  index={idx}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

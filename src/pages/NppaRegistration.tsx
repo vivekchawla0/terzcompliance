@@ -47,7 +47,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-/* ─── Reusable scroll-triggered wrapper (same as MedicalDevicesContent) ─── */
+/* ─── Reusable scroll-triggered wrapper (GPU-accelerated) ─── */
 const RevealSection = ({
   children,
   className,
@@ -58,23 +58,24 @@ const RevealSection = ({
   delay?: number;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 60, filter: "blur(8px)" }}
+      initial={{ opacity: 0, y: 35 }}
       animate={
         isInView
-          ? { opacity: 1, y: 0, filter: "blur(0px)" }
-          : { opacity: 0, y: 60, filter: "blur(8px)" }
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: 35 }
       }
       transition={{
-        duration: 0.7,
+        duration: 0.55,
         delay,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
+      style={{ willChange: isInView ? "auto" : "transform, opacity" }}
     >
       {children}
     </motion.div>
@@ -263,6 +264,8 @@ const NppaRegistration = () => {
           <img
             src={nppaHeroImg}
             alt="NPPA Registration for Medical Devices — Regulatory compliance dashboard with medical devices and official documentation"
+            loading="eager"
+            decoding="async"
             className="w-full h-full object-cover brightness-[0.85]"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/70 to-accent/70 mix-blend-multiply" />
