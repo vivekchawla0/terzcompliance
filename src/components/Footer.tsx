@@ -40,13 +40,20 @@ const insightLinks = [{
 const contactMethods = [{
   icon: Mail,
   label: "Write to us",
-  value: "info@terzcompliance.com",
-  href: "mailto:info@terzcompliance.com"
+  items: [{
+    value: "info@terzcompliance.com",
+    href: "mailto:info@terzcompliance.com"
+  }]
 }, {
   icon: Phone,
   label: "Call our experts",
-  value: "+91 79838 58470",
-  href: "tel:+917983858470"
+  items: [{
+    value: "+91 79838 58470",
+    href: "tel:+917983858470"
+  }, {
+    value: "+91 88405 57211",
+    href: "tel:+918840557211"
+  }]
 }];
 const Footer = () => {
   return <footer className="relative overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground">
@@ -133,9 +140,8 @@ const Footer = () => {
                   {contactMethods.map(({
                   icon: Icon,
                   label,
-                  value,
-                  href
-                }) => <li key={value} className="group/item flex items-start gap-3">
+                  items
+                }) => <li key={label} className="group/item flex items-start gap-3">
                       <span className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-accent/20 text-accent transition-transform duration-300 group-hover/item:-translate-y-1 group-hover/item:scale-110">
                         <Icon className="h-5 w-5" />
                       </span>
@@ -143,9 +149,13 @@ const Footer = () => {
                         <p className="text-xs uppercase tracking-[0.35em] text-primary-foreground/60">
                           {label}
                         </p>
-                        <a href={href} className="text-sm font-medium text-primary-foreground transition-all duration-300 hover:text-accent">
-                          {value}
-                        </a>
+                        <div className="flex flex-col gap-1">
+                          {items.map(({ value, href }) => (
+                            <a key={value} href={href} className="w-fit text-sm font-medium text-primary-foreground transition-all duration-300 hover:text-accent">
+                              {value}
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     </li>)}
                 </ul>
